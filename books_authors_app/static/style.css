@@ -1,0 +1,21 @@
+#book{
+    display: inline-block;
+    width: 40%;
+}
+#author{
+    display: inline-block;
+    width: 40%;
+}
+
+label, input, button{
+    margin: 5px;
+}
+
+#blist{
+    display: inline-block;
+    width: 40%;
+}
+
+#blist>table{
+    text-align: center;
+}

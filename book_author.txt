@@ -1,0 +1,108 @@
+In [1]: from books_authors_app.models import *
+
+In [2]: java = Book.objects.create(title="Java", desc="A book about Java")
+
+In [3]: c_sharp = Book.objects.create(title="C Sharp", desc="A book about C Sharp")
+
+In [4]: python = Book.objects.create(title="Python", desc="A book about Python")
+
+In [5]: php= Book.objects.create(title="PHP", desc="A book about PHP")
+
+In [6]: ruby = Book.objects.create(title="Ruby", desc="A book about Ruby")
+
+In [9]: austen = Author.objects.create(first_name = "Jane", last_name = "Austen")
+
+In [10]: dickinson = Author.objects.create(first_name = "Emily", last_name = "Dickinson")
+
+In [11]: dostoevsky = Author.objects.create(first_name = "Fyodor", last_name = "Dostoevsky")
+
+In [12]: shakespeare = Author.objects.create(first_name = "William", last_name = "Shakespeare")
+
+In [13]: tzu = Author.objects.create(first_name = "Lau", last_name = "Tzu")
+
+In [14]: quit()
+
+(djangoPy3Env) Michaels-MacBook-Air:books_authors michaelerickson$ python manage.py makemigrations
+Migrations for 'books_authors_app':
+  books_authors_app/migrations/0002_author_notes.py
+    - Add field notes to author
+(djangoPy3Env) Michaels-MacBook-Air:books_authors michaelerickson$ python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, books_authors_app, contenttypes, sessions
+Running migrations:
+  Applying books_authors_app.0002_author_notes... OK
+
+In [18]: c = Book.objects.get(id=2)
+
+In [19]: c.title = "C#"
+
+In [20]: c.save()
+
+In [21]: Book.objects.get(id=2)
+Out[21]: <Book: Book object (2)>
+
+In [22]: Book.objects.get(id=2).title
+Out[22]: 'C#'
+
+In [23]: bill = Author.objects.get(id=4)
+
+In [24]: bill.first_name = "Bill"
+
+In [25]: bill.save()
+
+In [26]: Author.objects.get(id=4).first_name
+Out[26]: 'Bill'
+
+In [28]: austen = Author.objects.get(id=1)
+
+In [29]: java = Book.objects.get(id=1)
+
+In [30]: austin.books.add(java)
+
+In [32]: austen.books.add(c_sharp)
+
+In [34]: dickinson = Author.objects.get(id=2)
+
+In [36]: dickinson.books.add(java, c_sharp)
+
+In [37]: dickinson.books.add(php)
+
+In [39]: python = Book.objects.get(id=3)
+
+In [40]: php= Book.objects.get(id=4)
+
+In [41]: dickinson.books.add(python, php)
+
+In [42]: dickinson.books.all()
+Out[42]: <QuerySet [<Book: Book object (1)>, <Book: Book object (2)>, <Book: Book object (3)>, <Book: Book object (4)>]>
+
+In [43]: dostoevsky = Author.objects.get(id=3)
+
+In [44]: dostoevsky.books.add(c_sharp, java, python)
+
+In [45]: shakespeare = Author.objects.get(id=4)
+
+In [46]: ruby = Book.objects.get(id=5)
+
+In [47]: shakespeare.books.add(c_sharp, java, python, php, ruby)
+
+In [49]: python.authors.all()
+Out[49]: <QuerySet [<Author: Author object (2)>, <Author: Author object (3)>, <Author: Author object (4)>]>
+
+In [50]: python.authors.get(id=2)
+Out[50]: <Author: Author object (2)>
+
+In [51]: first_gone = Author.objects.get(id=2)
+
+In [52]: first_gone.delete()
+Out[52]: (5, {'books_authors_app.Author_books': 4, 'books_authors_app.Author': 1})
+
+In [53]: tzu = Author.objects.get(id=5)
+
+In [54]: tzu.books.add(java)
+
+In [55]: dostoevsky.books.all()
+Out[55]: <QuerySet [<Book: Book object (1)>, <Book: Book object (2)>, <Book: Book object (3)>]>
+
+In [56]: ruby.authors.all()
+Out[56]: <QuerySet [<Author: Author object (4)>]>
