@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect
 from books_authors_app.models import *
 
-def index(request):
+def home(request):
+    return render(request, "home.html")
+
+def book(request):
     context = {
         "all_books": Book.objects.all(),
     }
-    return render(request, "index.html", context)
+    return render(request, "book.html", context)
 
 def author(request):
     context = {
@@ -18,7 +21,7 @@ def add_book(request):
         title=request.POST['title'],
         desc=request.POST['desc'],
     )
-    return redirect('/')
+    return redirect('/book')
 
 def add_author(request):
     Author.objects.create(
@@ -44,3 +47,15 @@ def author_desc(request, author_id):
         "books": Book.objects.exclude(authors__id=author_id)
     }
     return render(request, "author_desc.html", context)
+
+def assign_author(request, author_id):
+    book = Book.objects.get(id=request.POST['book_id'])
+    author = Author.objects.get(id=author_id)
+    book.authors.add(author)
+    return redirect(f"/author_desc.html/{author_id}")
+
+def assign_book(request, book_id):
+    book = Book.objects.get(id=book_id)
+    author = Author.objects.get(id=request.POST['author_id'])
+    book.authors.add(author)
+    return redirect(f"/book_desc.html/{book_id}")

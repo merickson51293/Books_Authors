@@ -11,6 +11,28 @@
     <h1>{{ book.title }}</h1>
     <h4>Book ID: {{ book.id }}</h4>
     <h4>Book Description: {{ book.desc }}</h4>
-    <h4>  </h4>
+    <h4>Authors:</h4>
+    <ul>
+        {% for author in book.authors.all %}
+            <li><a href="/author_desc.html/{{author.id}}">{{ author.first_name }} {{ author.last_name }}</a></li>
+        {% endfor %}
+        </ul>
+        {% if authors %}
+        <form action="/book/{{ book.id }}/assign" method="post">
+            {% csrf_token %}
+            <div>
+                <label for="author_id">Add Author</label>
+                <select name="author_id" id="author_id">
+                    {% for author in authors %}
+                    <option value="{{ author.id }}">{{ author.first_name}} {{ author.last_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button>Add</button>
+        </form>
+        {% endif %}
+        <a href="/author">Back to Author List</a>
+    </br>
+        <a href="/">Back to Book List</a>
 </body>
 </html>
